@@ -21,9 +21,9 @@
 声明
 ========================
 
-本电子文档是由 `VScode <https://code.visualstudio.com/>`_ + `Sphinx <https://pypi.org/project/Sphinx/>`_ + `ReadTheDocs <https://readthedocs.org/>`_ 进行搭建管理。
+本文档由 `VScode <https://code.visualstudio.com/>`_ + `Sphinx <https://pypi.org/project/Sphinx/>`_ + `ReadTheDocs <https://readthedocs.org/>`_ 进行搭建管理。
 具体指引方法，请移步 `环境搭建 <https://blog.csdn.net/a201577F0546/article/details/78867756>`_
 
-电子文档的内容及知识点均为本人在书本或其他地方整理而得，仅供参考。
+电子文档的内容及知识点均为本人在书本或其他地方整理而得，仅供参考！
 
-有任何问题欢迎 `与我联系 <http://www.myheyufei.com>`_
+任何问题欢迎 `与我联系 <http://www.myheyufei.com>`_
