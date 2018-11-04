@@ -87,6 +87,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#response">响应 (Response)</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">网页基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">网页的组成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html-dom">HTML DOM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#css">CSS选择器</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">爬虫的基本原理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">爬虫的步骤</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -155,11 +165,9 @@
             
   <div class="section" id="id1">
 <h1>1. 爬虫基础<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">如果把互联网比作成一张大网，那么爬虫就是获取到网页提取并保存其中的信息的自动化 <strong>程序</strong> 。</p>
-</div>
-<p>在认识爬虫之前，还需要具备的一些基础的网络知识。</p>
+<blockquote>
+<div>————如果把互联网比作成一张大网，那么爬虫就是获取到网页提取并保存其中的信息的自动化 <strong>程序</strong></div></blockquote>
+<p>在认识爬虫之前，还需要具备的一些基础的网络知识</p>
 <hr class="docutils" />
 <div class="section" id="httphttps">
 <h2>HTTP和HTTPS<a class="headerlink" href="#httphttps" title="Permalink to this headline">¶</a></h2>
@@ -355,8 +363,166 @@ Cooikes中有信息标识了所对应的服务器的会话，每次浏览器在�
 </ol>
 </div></blockquote>
 <p>响应的正文数据都在响应体中，所以最重要的当属响应体中的内容。
-爬虫请求网页后要解析的内容就是响应体。</p>
+爬虫请求网页后要解析的内容就是响应体。可以在浏览器的开发者工具中选择Preview查看响应体的内容</p>
 <p>在爬虫时，主要通过响应体得到网页的源代码、JSON数据等。然后从相应的内容提取。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>网页基础<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>————为什么浏览器的打开网页显示会是这个样子？</div></blockquote>
+<div class="section" id="id3">
+<h3>网页的组成<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>网页可以分为三大部分————HTML、CSS、JS</p>
+<ol class="arabic simple">
+<li>HTML：HTML语言全称为 Hyper Text Markup Language，即超文本标记语言。网页中的所有元素，基础架构都是HTML。不同类型的元素由不同的标签来表示。正是由于各种标签通过不同的排列和嵌套最后才形成了网页的框架</li>
+<li>CSS: CSS全称为 Cascading Style Sheets,即层叠样式表。为什么叫做’层叠’是指当HTML中引用了数个样式文件，并且发生冲突时，浏览器能够依据层叠顺序处理。CSS是目前唯一的网页页面排版样式标准</li>
+<li>JS: 全称为JavaScript，是一种脚本语言。它能够给页面提供交互和动画效果。如下载进度条、提示框、轮播图等</li>
+</ol>
+<p>综上所述，HTML定义了网页的内容和结构，CSS描述的网页的布局，JS定义了网页的行为。如果把网页比作一个人的话，那么HTML就好比是骨架，CSS犹如身上的肌肉和衣服，JS就是描述这个人的行为。</p>
+<p>Demo html</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&#39;UTF-8&#39;&gt;
+    &lt;title&gt;This is a demo web&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&#39;aa&#39;&gt;
+      &lt;div class=&#39;bb&#39;&gt;
+        &lt;h2&gt;Hello world!&lt;/h2&gt;
+        &lt;p&gt;This is paragraph.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>上述是一个简单的HTML代码实例。开头用 <code class="docutils literal notranslate"><span class="pre">&lt;!DOCTYPE</span> <span class="pre">html&gt;</span></code> 定义文档的类型为html。其次是最外层需要用 <code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code> 和 <code class="docutils literal notranslate"><span class="pre">&lt;/html&gt;</span></code> 将所有标签包含进来。
+同时在内部分别定义了 <code class="docutils literal notranslate"><span class="pre">&lt;head&gt;</span></code> 和 <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> 标签。代表网页头和网页体，在网页头中定义了页面的编码方式为 <em>UTF-8</em>，同时给页面设定了一个title。此标题是显示在浏览器的页面选项卡中
+除此之外还可以在网页头中引入外部的js文件或者css文件(你也可以在body中引入该文件，好处是网页HTML加载完成后再进行渲染)</p>
+<p>此外，在上述代码中的 <code class="docutils literal notranslate"><span class="pre">div</span></code> 标签中还定义了 <code class="docutils literal notranslate"><span class="pre">id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">class</span></code> 。通过 <code class="docutils literal notranslate"><span class="pre">id</span></code> 的值能够唯一的确定页面中的这个 <code class="docutils literal notranslate"><span class="pre">div</span></code> 区块，而 <code class="docutils literal notranslate"><span class="pre">class</span></code> 的值则是能确定一类名称一致的区块。灵活配合CSS能够设定区块的样式。</p>
+<dl class="docutils">
+<dt>更多前端知识建议参考：</dt>
+<dd><a class="reference external" href="https://www.w3.org/community/webed/wiki/HTML/Training">W3C-HTML教程</a> 、 <a class="reference external" href="https://developer.mozilla.org/zh-CN/docs/Learn/HTML">MDN-HTML教程</a></dd>
+</dl>
+</div>
+<div class="section" id="html-dom">
+<h3>HTML DOM<a class="headerlink" href="#html-dom" title="Permalink to this headline">¶</a></h3>
+<p>在HTML中，所有的标签定义的内容都是节点，它们共同构成了一个HTML DOM树型结构。如下所示：</p>
+<img alt="_images/html_dom.gif" src="_images/html_dom.gif" />
+<p>在理解之前首先要知道什么是DOM？</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>DOM(Document Object Model),即文档对象模型。</p>
+<dl class="last docutils">
+<dt>DOM 是 W3C（万维网联盟）的标准，它定义了访问 HTML 和 XML 文档的标准：</dt>
+<dd>W3C 文档对象模型(DOM)是中立于 <strong>平台</strong> 和 <strong>语言</strong> 的接口，它允许 <strong>程序</strong> 和 <strong>脚本</strong> 动态地访问和更新文档的内容、结构和样式。</dd>
+<dt>W3C DOM 标准被分为 3 个不同的部分：</dt>
+<dd><ol class="first last arabic simple">
+<li>核心 DOM —— 针对任何结构化文档的标准模型</li>
+<li>XML DOM —— 针对 XML 文档的标准模型</li>
+<li>HTML DOM —— 针对 HTML 文档的标准模型</li>
+</ol>
+</dd>
+</dl>
+</div>
+<p>通过HTML DOM,上图中的所有节点都可以通过JavaScript访问。所有的节点元素均可被修改、创建和删除。
+同时节点与节点之间还具有层级关系：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>父节点 —— 父节点拥有子节点</li>
+<li>子节点 —— 任何除根节点外的节点都是其上级节点的子节点</li>
+<li>兄弟节点 ——— 同级节点称为兄弟节点</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="css">
+<h3>CSS选择器<a class="headerlink" href="#css" title="Permalink to this headline">¶</a></h3>
+<p>网页是由一个一个节点构成的，CSS选择器会根据不同的节点设置不同的样式规则。</p>
+<p class="centered">
+<strong>表1.3 部分CSS选择器定位规则</strong></p><table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">选择器</th>
+<th class="head">例 子</th>
+<th class="head">描 述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">.</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">.abc</span></code></td>
+<td>选择 <em>class=’abc’</em> 的所有节点</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">.</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">div</span> <span class="pre">.abc</span></code></td>
+<td>选择 <em>class=’abc’</em> 的所有名为div的节点</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">#</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">#abc</span></code></td>
+<td>选择 <em>id=’abc’</em> 的所有节点</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">*</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">*</span></code></td>
+<td>选择所有节点</td>
+</tr>
+<tr class="row-even"><td>空</td>
+<td><code class="docutils literal notranslate"><span class="pre">p</span></code></td>
+<td>选择所有的p节点</td>
+</tr>
+<tr class="row-odd"><td>空,空</td>
+<td><code class="docutils literal notranslate"><span class="pre">div,p</span></code></td>
+<td>选择所有的div节点和的p节点</td>
+</tr>
+<tr class="row-even"><td>空 空</td>
+<td><code class="docutils literal notranslate"><span class="pre">div</span> <span class="pre">p</span></code></td>
+<td>选择所有的div节点中的p节点</td>
+</tr>
+<tr class="row-odd"><td>空&gt;空</td>
+<td><code class="docutils literal notranslate"><span class="pre">div&gt;p</span></code></td>
+<td>选择所有父节点为div节点的p节点</td>
+</tr>
+<tr class="row-even"><td>空+空</td>
+<td><code class="docutils literal notranslate"><span class="pre">div+p</span></code></td>
+<td>选择所有紧接着&lt;div&gt;节点之后的&lt;p&gt;节点</td>
+</tr>
+<tr class="row-odd"><td>[属性]</td>
+<td><code class="docutils literal notranslate"><span class="pre">[target]</span></code></td>
+<td>选择所有带有target属性的节点</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div>————全部CSS选择器表请参考 <a class="reference external" href="http://www.w3school.com.cn/cssref/css_selectors.ASP">CSS选择器参考手册</a></div></blockquote>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>爬虫的基本原理<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>正如前述所说，互联网就好比一张铺开的大网。各种信息交织在一起。爬虫便是能够自动的将我们所需要的信息快速且高效的抓取下来</p>
+<div class="section" id="id6">
+<h3>爬虫的步骤<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>获取网页：</li>
+</ol>
+<blockquote>
+<div>这是爬虫首先要做的事情————获取网页的源代码。向URL网页所在的服务器发送一个请求，返回的响应体便是网页的源代码。
+爬虫就是利用这个过程，构造一个请求发送给服务器，然后接收到响应并将其解析。</div></blockquote>
+<p>如何用Python实现：</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">在python中提供了很多库来帮助我们实现上述操作，如：urllib、request等。
+我们可以利用这些库实现HTTP的请求操作。请求和响应的接收都有库帮助我们完成。
+最后通过特定的方法获取到网页的源代码，这样就能够通过程序的手段实现获取网页的过程。</p>
+</div>
+<ol class="arabic simple" start="2">
+<li>提取信息：</li>
+<li>保存数据：</li>
+<li>自动化程序：</li>
+</ol>
 </div>
 </div>
 </div>
