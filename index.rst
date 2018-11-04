@@ -7,5 +7,5 @@
 
     forword/*
     crawler_1/*
-    
+    *
 
