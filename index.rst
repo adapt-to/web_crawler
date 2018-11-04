@@ -5,6 +5,7 @@
     :glob:
     :maxdepth: 2
 
-    forword
-    crawler_1
+    forword/*
+    crawler_1/*
+    
 
