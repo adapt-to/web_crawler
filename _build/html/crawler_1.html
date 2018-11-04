@@ -97,6 +97,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id6">爬虫的步骤</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#sessioncookies">Session和Cookies</a></li>
 </ul>
 </li>
 </ul>
@@ -505,9 +506,7 @@ Cooikes中有信息标识了所对应的服务器的会话，每次浏览器在�
 <p>正如前述所说，互联网就好比一张铺开的大网。各种信息交织在一起。爬虫便是能够自动的将我们所需要的信息快速且高效的抓取下来</p>
 <div class="section" id="id6">
 <h3>爬虫的步骤<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<ol class="arabic simple">
-<li>获取网页：</li>
-</ol>
+<p><strong>1. 获取网页</strong></p>
 <blockquote>
 <div>这是爬虫首先要做的事情————获取网页的源代码。向URL网页所在的服务器发送一个请求，返回的响应体便是网页的源代码。
 爬虫就是利用这个过程，构造一个请求发送给服务器，然后接收到响应并将其解析。</div></blockquote>
@@ -518,12 +517,47 @@ Cooikes中有信息标识了所对应的服务器的会话，每次浏览器在�
 我们可以利用这些库实现HTTP的请求操作。请求和响应的接收都有库帮助我们完成。
 最后通过特定的方法获取到网页的源代码，这样就能够通过程序的手段实现获取网页的过程。</p>
 </div>
-<ol class="arabic simple" start="2">
-<li>提取信息：</li>
-<li>保存数据：</li>
-<li>自动化程序：</li>
-</ol>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">有时利用urllib、request抓取网页时，获得的源代码和实际在浏览器中的看到的不一样。这是由于网页越来越多的利用Ajax异步刷新、前端模块化工具来构建，
+整个网页可能都是由JS渲染出来的。此时HTML代码完全就是一个空壳，所有的内容都是由JavaScript去执行HTML代码中引入的JS文件运行得到的。针对此类情况就可以通过分析其后台的Ajax接口，
+或是利用Selenium、Splash这样的库来实现模拟JavaScript渲染。</p>
 </div>
+<p><strong>2. 提取信息</strong></p>
+<blockquote>
+<div><p>获取到网页源代码后就是分析源代码，定位并提取到我们需要的信息。由于源代码中除了含有我们所需的信息外还含有HTML标签元素等干扰项，通用的办法是利用正则表达式，但是正则表达式在构造时容易出错，且比较复杂。</p>
+<p>别急，Python提供了一些库来帮助我们，比如：Beautiful Soup、pyquery、lxml等。使用这些库能够使我们快速地从中提取网页信息，如节点的属性，文本值等。
+python的魅力正是如此，如此丰富的武器库能够让我们达到快速开发的目的。</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">提取信息是爬虫中十分重要的步骤，它能够使杂乱无章的数据变的条理清晰</p>
+</div>
+<p><strong>3. 保存数据</strong></p>
+<blockquote>
+<div><dl class="docutils">
+<dt>提取到信息后，通常会将信息保存到某处以便后续使用。保存的形式有很多：</dt>
+<dd><ul class="first last simple">
+<li>简单保存为TXT文本或JSON文本</li>
+<li>保存到数据库中</li>
+<li>保存到远程服务器</li>
+<li>…</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>4. 自动化程序</strong></p>
+<blockquote>
+<div><p>自动化获取信息就是我们爬虫的终极目标，虽然能够用人工的方法获取到信息，但是由于信息量的枯燥和繁杂，就需要借助到自动化程序能够帮助我们完成此类工作</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">我们可以在程序中添加各种异常处理，错误重试，反爬等操作，使爬取能够高效的完成预期工作。</p>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="sessioncookies">
+<h2>Session和Cookies<a class="headerlink" href="#sessioncookies" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
