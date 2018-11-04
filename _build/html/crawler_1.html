@@ -97,7 +97,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#id6">爬虫的步骤</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#sessioncookies">Session和Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sessioncookies">Session和Cookies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">静态网页与动态网页</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Session和Cookies原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9"><strong>会话维持</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cooikes"><strong>Cooikes属性结构</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -563,6 +569,86 @@ python的魅力正是如此，如此丰富的武器库能够让我们达到快�
 <hr class="docutils" />
 <div class="section" id="sessioncookies">
 <h2>Session和Cookies<a class="headerlink" href="#sessioncookies" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>————在浏览网站的过程中，经常会遇到需要登录的时候，有的网站甚至只有登录后才能够访问，在登陆后我们可以连续访问很多次网站。但是再过一段时间就需要再次登录才能访问。这是为什么呢？</p>
+<p>在此之前，还需要了解一下其他的知识，这样能够方便理解Session和Cookies</p>
+</div></blockquote>
+<div class="section" id="id7">
+<h3>静态网页与动态网页<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>静态网页 —— 内容已经被写死的网页，优点是加载速度快，编写简单；缺点是可维护性差，不能根据URL灵活地显示内容。</li>
+<li>动态网页 —— 动态解析URL中的参数并与数据库交互，用户的登录和注册操作就是依据动态网站来实现的</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">在上面提到的登录操作，就是在用户登录后拿到了能够唯一对应该用户的凭证。这样才能够在登录后的一段时间里保持用户的登录状态。
+不过这个凭证到底是什么？其实它就是Session和Cookies共同产生的结果!</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>Session和Cookies原理<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>在了解其原理之前，我们必须知道HTTP的一个特点——HTTP的无状态</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">HTTP的无状态是指HTTP协议对事务处理是没有记忆的，服务器不知道客户端是什么状态。每一次向服务器发送请求，服务器收到请求并解析再返回对应的响应，这整个过程是完全独立的。
+服务器不会记录前后状态的变化。</p>
+</div>
+<p>这意味着 <strong>如果后续需要处理前面的信息，则必须重传</strong> 。但是这样重复性的工作肯定不是我想要的。</p>
+<dl class="docutils">
+<dt>因此，Session(会话)和Cookies这两个用于保持HTTP连接状态的技术就应运而生了。</dt>
+<dd><ol class="first last arabic simple">
+<li>Session在服务端，用来保存用户的会话信息</li>
+<li>Cookies在客户端，在发送请求时被附带上，用来识别用户身份</li>
+</ol>
+</dd>
+</dl>
+<p>正是由于这两个技术的存在，才使得我们能够在登录到某一网站后继续访问网站的其他页面而不需要再次验证登录</p>
+<p>什么是Session(会话)：</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>会话本是指 <strong>有始有终</strong> 的一系列动作或消息。例如：街上的两人从刚碰头聊天到刚结束分开这个过程就可以理解为一个会话。</p>
+<p class="last">在web中，会话对象(Session)用来存储特定用户所需的属性以及配置信息。这样，当某个用户在网站的web之间跳转时，存储在会话中的变量并不会丢失，而是在整个用户会话中一直存在下去。当用户请求某网站的web时还没有会话，这服务器将自动给用户创建一个会话对象。当会话过期或被放弃后则终止此对话。</p>
+</div>
+<p>什么是Cookies：</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Cookies是浏览器储存在用户电脑上的一小段文本文件。一个WEB页面或服务器，来告知浏览器按照一定规范来储存这些信息，并在随后的请求中将这些信息发送至服务器。</p>
+</div>
+<p>Cookie通常用来识别不同的用户。</p>
+</div>
+<div class="section" id="id9">
+<h3><strong>会话维持</strong><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>如何利用Session和Cookies来保持状态呢？</dt>
+<dd><p class="first">当客户端 <strong>第一次</strong> 向服务器发出请求时，服务器会在响应头中返回一个Set-Cookies字段给客户端，此Cooikes用来标记用户身份。客户端会将Cooikes保存起来。当客户端下一次再次请求该网站时会把此Cooikes放到请求头(Request-Headers)中一起提交给服务器。</p>
+<p class="last">由于Cooikes中携带了会话ID信息，那么服务器就可以通过Cooikes找到对应的Session所在，然后再判断会话的信息来辨认用户的状态。
+反之，如果客户端传给服务器的Cooikes是无效的或者Session已过期了。我们将不能够继续访问此网站，而需要重新登录。</p>
+</dd>
+</dl>
+<p>综上，只有Cooikes和Session相互配合，一个处于客户端(Cooikes)，一个处于服务端(Session)，二者共同协作，就能够实现会话控制。</p>
+</div>
+<div class="section" id="cooikes">
+<h3><strong>Cooikes属性结构</strong><a class="headerlink" href="#cooikes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><dl class="docutils">
+<dt>Cooikes具有以下几个属性：</dt>
+<dd><ol class="first last arabic simple">
+<li>Name —— Cooikes的名称，一旦创建不可修改</li>
+<li>Value —— Cooikes值，如果值为Unicode字符，则需要为字符编码。如果值为二进制数据，则需要使用BASE64编码</li>
+<li>Domain —— 可以访问该Cooikes的域名。</li>
+<li>Max Age —— Cooikes失效时间，单位为秒。常和Expires一起使用，通过它可以计算出其有效时间。如果Max Age值为正数则为失效秒数，如果为负数则表示关闭浏览器时Cooikes即失效。</li>
+<li>Path —— Cooikes的使用路径，如果设置为/Path/，则只有在路径为/Path/下的页面可以访问该Cooikes，如果设置为/，则本域名下的所有页面都能够访问该Cooikes</li>
+<li>Size —— Cooikes的大小</li>
+<li>HTTP字段 —— Cooikes的httponly属性。如果此属性为True，则只能在HTTP协议头中会带有此Cooikes的信息，而不能通过document.cooike 来访问此Cooikes</li>
+<li>Secure —— 该Cooikes是否仅被使用安全协议传输。此字段默认为False</li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+<p><a class="reference external" href="https://zhuanlan.zhihu.com/p/27669892">SessionCooikes知识参考</a></p>
+</div>
 </div>
 </div>
 
