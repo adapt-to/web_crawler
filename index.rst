@@ -12,4 +12,5 @@
 
     forword
     crawler_1
+    base_ku
 
