@@ -102,6 +102,17 @@
 <li class="toctree-l3"><a class="reference internal" href="#id8">Session和Cookies原理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id9">会话维持</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cooikes">Cooikes属性结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cooikescooikes">会话Cooikes和持久Cooikes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">代理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">什么是代理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">代理的作用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">代理分类</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id14">根据协议分类</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">根据匿名程度分类</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -648,6 +659,80 @@ python的魅力正是如此，如此丰富的武器库能够让我们达到快�
 </dl>
 </div></blockquote>
 <p><a class="reference external" href="https://zhuanlan.zhihu.com/p/27669892">SessionCooikes知识参考</a></p>
+</div>
+<div class="section" id="cooikescooikes">
+<h3>会话Cooikes和持久Cooikes<a class="headerlink" href="#cooikescooikes" title="Permalink to this headline">¶</a></h3>
+<p>对于Cooikes是否是会话还是持久没有什么严格的区分，都是由上述讲到的Cooikes的Max Age属性决定的。</p>
+<dl class="docutils">
+<dt>做一个概念上的区分：</dt>
+<dd><ol class="first last arabic simple">
+<li>会话Cooikes：是指将Cooikes放在浏览器的内存中，浏览器关闭后该Cooikes即失效</li>
+<li>持久Cooikes：是指将Cooikes放在客户端的硬盘里，下次打开浏览器还可以继续使用</li>
+</ol>
+</dd>
+</dl>
+<p>关于会话Cooikes引起的一个误区：</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>经常有一个说法认为：如果浏览器关闭了那么服务端的会话Session就消失了。</p>
+<p>其实这种说法是错误的，在我们关闭浏览器的时候，服务端并不知道我们关闭了浏览器，所以服务端也没有理由删除Session。
+但事实上我们遇到的情况确实是关闭浏览器再打开某个网站还是要求用户再次登录，给大家造成这种错觉的罪魁祸首就是会话Cooikes，
+因为会话Cooikes是放在浏览器缓存中的，而Cooikes中又保存了Session ID的信息。所以用户关闭了浏览器，相当于丢失了自己的Session ID。
+所以服务器没有Session ID，自然找不到对应的Session。故而再次打开还需要让用户登录。</p>
+<p class="last">综上，并不是服务端的过错，而是会话Cooikes造成的！！</p>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>代理<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>当我们在爬取某些网页时，一开始能够成功爬取到内容。可是过一段时间就出现了错误，网页可能显示‘您的IP访问频率过高，已禁止访问’
+这是网站的一种反爬手段，服务器如果检测到某一个IP在单位时间内请求次数超过设定的阈值时，就会直接拒绝服务。
+解决这种问题的常用手段就是代理。</p>
+<div class="section" id="id11">
+<h3>什么是代理<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>代理全称为 <strong>代理服务器</strong> （proxy server），它的功能是帮助用户去获得网络信息。简单来讲就是在以前用户和服务器之间的桥梁中加入了一种代理服务器。
+类似于网络信息的中转站，这样的好处是向服务器发送请求的就不再是用户本身，而是代理的服务器了。这样服务端就只能识别到代理的IP，而我们自身的IP得到的隐藏。</div></blockquote>
+</div>
+<div class="section" id="id12">
+<h3>代理的作用<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>代理的作用远不止上面讲的伪装IP，其实它还有其他作用</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>突破自身IP限制，访问一些平时不能访问的站点：比如VPN就是依靠这种技术</li>
+<li>访问一些单位或者团体的内部资源：比如教育网的地址段免费代理服务器，就可以用于教育网开发的各类FTP下载上传</li>
+<li>提高访问速度：通常代理服务器都设置了较大的硬盘缓冲区，当外界信息通过时，先由代理服务器保存到缓存中，当其他用户也访问到相同的信息时，直接由代理服务器的缓存中取出信息即可</li>
+<li>隐藏真实IP：这也是上面说到的，爬虫的时候使用代理就是为了防止IP被封锁，通过是利用由很多代理服务器构成的代理池进行信息的爬取</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h3>代理分类<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h4>根据协议分类<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ol class="arabic simple">
+<li>FTP 代理服务器：主要用于访问FTP服务器，有上传、下载以及缓存功能，端口一般为21,2121等</li>
+<li>HTTP 代理服务器：主要用于访问网页，一般有内容过滤和缓存功能，端口一般为80,8080,3128等</li>
+<li>SSL/TLS 代理服务器：主要用于访问加密网站，一般有SSL和TLS加密功能，端口一般为443</li>
+<li>RTSP 代理服务器：主要用于访问Real流媒体服务器，一般有缓存功能，端口一般为554</li>
+<li>Telnet 代理服务器：主要用于Telnet远程控制，端口一般为23</li>
+<li>POP3/SMTP 代理服务器：主要用于收发邮件，一般有缓存功能，端口为110/25</li>
+<li>SOCKS 代理服务器：单纯的传输数据包，不关心具体协议的用法，速度很快，有缓存功能，端口一般为1080</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id15">
+<h4>根据匿名程度分类<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ol class="arabic simple">
+<li>高度匿名代理：会将数据包原封不动的转发，在服务端看来就是一个普通的客户端在访问，服务端记录的IP就是代理服务器的IP</li>
+<li>普通匿名代理：会在数据包上做一些改动，服务端可能会发现这是代理服务器，甚至追查到客户端的真实IP</li>
+<li>透明代理：不但改动数据包，并且会告诉服务器客户端的真实IP</li>
+<li>间谍代理：组织或个人创建的用于记录用户传输的数据，然后进行研究、监控等目的的代理</li>
+</ol>
+</div></blockquote>
+</div>
 </div>
 </div>
 </div>
